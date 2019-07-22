@@ -24,6 +24,7 @@ def parse_child_dict(words,arcs):
     return child_dict_list
 
 if __name__ == '__main__':
+    '让 车子 充满 了 肌肉感'
     words = ['奔驰', '的', '操控性', '很', '好']
     postags = ['nz', 'u', 'n', 'd', 'a']
     arcs = arcs_ltp(words,postags)
