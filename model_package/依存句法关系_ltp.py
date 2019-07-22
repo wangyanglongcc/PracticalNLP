@@ -35,7 +35,6 @@ def arcs_ltp(words, postags):
     parser.release()  # 释放模型
     return arcs
 
-
 def parse_child_dict(words, arcs):
     '''
     为句子中的每个词语维护一个保存句法依存子节点的字典
