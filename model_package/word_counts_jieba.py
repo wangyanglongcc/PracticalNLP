@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 import os
 import jieba
+CURRENTFILE = os.path.abspath(__file__)
+CURRENTPATH = os.path.dirname(CURRENTFILE)
+FATHERPATH = os.path.dirname(CURRENTPATH)
 from collections import Counter
-path = r'D:\PycharmProjects\NLP\model_package'
-jieba.load_userdict(os.path.join(path,'user_dict2_jieba.txt'))
-stopwords = [i.strip('\n') for i in open(os.path.join(path,'stopwords.txt'),encoding='utf-8')] + ['\n']
+jieba.load_userdict(os.path.join(FATHERPATH,'doc/user_dict2.txt'))
+stopwords = [i.strip('\n') for i in open(os.path.join(FATHERPATH,'doc/stopwords.txt'),encoding='utf-8')] + ['\n']
 
 def seg_jieba(text,withstopwords=False):# jieba分词
     words = [word for word in jieba.cut(text)]
