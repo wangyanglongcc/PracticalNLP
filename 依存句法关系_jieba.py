@@ -72,53 +72,22 @@ def fun(words, postags, child_dict_list):
             return (0, 0, 'rule13')
 
 
-def rule(texts):
-    rules = []
-    for index, text in enumerate(texts):
-        words, postags, arcs = arcs_jieba(text)
-        child_dict_list = parse_child_dict(words, arcs)
-        _, _, rule = fun(words, postags, child_dict_list)
-        rules.append(rule)
-        if index % 1000 == 0:
-            print(index, Counter(rules))
-    return rules
-
-
-def main(texts):
-    texts = list(texts)
-    pool = Pool(3)
-    max_rows = 17000
-    res = []
-    for i in range(int(np.ceil(len(texts) / max_rows))):
-        text = texts[i * max_rows:i * max_rows + max_rows]
-        res.append(pool.apply_async(func=rule, args=(text,)))
-    pool.close()
-    pool.join()
-    res = [i.get() for i in res]
-    print(Counter(res))
 
 
 if __name__ == '__main__':
-    texts = ['刹车满分', '刹车和车身都很稳', '推背十足', '动力十足']
+    texts = ['刹车满分', '刹车和车身都很稳', '推背十足', '动力十足','转弯的时候很灵活']
     # texts = ['刹车很稳','安全感非常足','很没有安全感','刹车满分','自动驻车需要加装']
     # texts = ['我喜欢黑白两色','个人感觉电子手刹的位置不习惯','亚洲龙音响异响']
-    file = r'\\192.168.1.4\数据分析组数据存储\王杨龙\ty_201906\口碑评论表头.pl'
-    import pickle
+    for index,text in enumerate(texts):
+        words,postags,arcs = arcs_jieba(text)
+        child_dict_list = parse_child_dict(words,arcs)
+        heads = [arc.head for arc in arcs]
+        relations = [arc.relation for arc in arcs]
+        res = fun(words,postags,child_dict_list)
+        print(words)
+        print(postags)
+        print(heads)
+        print(relations)
+        print(child_dict_list)
+        print(res)
 
-    with open(file, 'rb') as f:
-        df = pickle.load(f)
-    texts = set(df['word'])
-    print(len(texts))
-    main(texts)
-    # rules = []
-    # for index,text in enumerate(texts):
-    #     words,postags,arcs = arcs_jieba(text)
-    #     child_dict_list = parse_child_dict(words,arcs)
-    #     heads = [arc.head for arc in arcs]
-    #     relations = [arc.relation for arc in arcs]
-    #     _,_,rule = fun(words,postags,child_dict_list)
-    #     rules.append(rule)
-    #     if index % 1000 == 0:
-    #         print(index,Counter(rules))
-    # print(index, Counter(rules))
-    # print(["%d:%s" % (arc.head, arc.relation) for arc in arcs])
