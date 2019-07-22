@@ -72,22 +72,19 @@ def fun(words, postags, child_dict_list):
             return (0, 0, 'rule13')
 
 
-
-
 if __name__ == '__main__':
-    texts = ['刹车满分', '刹车和车身都很稳', '推背十足', '动力十足','转弯的时候很灵活']
+    texts = ['刹车满分', '刹车和车身都很稳', '推背十足', '动力十足', '转弯的时候很灵活']
     # texts = ['刹车很稳','安全感非常足','很没有安全感','刹车满分','自动驻车需要加装']
     # texts = ['我喜欢黑白两色','个人感觉电子手刹的位置不习惯','亚洲龙音响异响']
-    for index,text in enumerate(texts):
-        words,postags,arcs = arcs_jieba(text)
-        child_dict_list = parse_child_dict(words,arcs)
+    for index, text in enumerate(texts):
+        words, postags, arcs = arcs_jieba(text)
+        child_dict_list = parse_child_dict(words, arcs)
         heads = [arc.head for arc in arcs]
         relations = [arc.relation for arc in arcs]
-        res = fun(words,postags,child_dict_list)
+        res = fun(words, postags, child_dict_list)
         print(words)
         print(postags)
         print(heads)
         print(relations)
         print(child_dict_list)
         print(res)
-
